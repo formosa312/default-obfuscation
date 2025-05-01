@@ -38,14 +38,14 @@ python obfuscator.py input.py output.py secret.key
 ```
 Generates:
 - `output.py` - Protected code
-- `secret.key` - Binary key file
+- `key.txt` - Binary key file
 
 ### Running Obfuscated Code
 ```bash
 python output.py
 ```
 Automatically looks for:
-1. `key.bin` (default filename)
+1. `key.txt` (default filename)
 2. Prompts for manual key entry if file missing
 
 ## Key Management
@@ -53,7 +53,7 @@ Automatically looks for:
 ### Saving Keys
 ```bash
 # Save emergency key to file
-echo "EMERGENCY_KEY" > key.bin
+echo "EMERGENCY_KEY" > key.txt
 ```
 
 ### Key Formats
@@ -63,7 +63,7 @@ echo "EMERGENCY_KEY" > key.bin
 ### Key Rotation
 ```bash
 # Generate new key
-python -c "import os; print(os.urandom(32))" > new.key
+python -c "import os; print(os.urandom(32))" > key.txt
 ```
 
 ## Security Features
