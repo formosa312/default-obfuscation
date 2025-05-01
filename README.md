@@ -109,4 +109,3 @@ This README provides:
 4. Realistic security expectations
 5. Ethical use considerations
 
-Would you like me to add any specific section or modify the existing content?
