@@ -1,4 +1,4 @@
-```markdown
+markdown
 # Python Code Obfuscator with AES-256-GCM Protection
 
 A robust code protection solution combining military-grade encryption and code obfuscation techniques.
@@ -21,7 +21,6 @@ A robust code protection solution combining military-grade encryption and code o
 
 ```bash
 pip install cryptography
-```
 
 ## Usage
 
