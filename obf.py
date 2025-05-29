@@ -12,11 +12,11 @@ def generate_random_name(length=12):
 def obfuscate(input_file: str, output_file: str, key_file: str = None):
     with open(input_file, 'r', encoding='utf-8') as f:
         code = marshal.dumps(compile(f.read(), '<string>', 'exec'))
-    
+
     key = os.urandom(32)
     nonce = os.urandom(12)
     ciphertext = AESGCM(key).encrypt(nonce, code, None)
-    
+
     vars = {
         'enc_data': generate_random_name(),
         'key_data': generate_random_name(),
@@ -31,7 +31,7 @@ def obfuscate(input_file: str, output_file: str, key_file: str = None):
         'print_func': generate_random_name(),
         'open_func': generate_random_name(),
     }
-    
+
     template = f"""
 from builtins import exec, input as {vars['input_func']}, print as {vars['print_func']}, open as {vars['open_func']}, exit as {vars['exit_func']}
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM as {vars['aesgcm']}
@@ -43,7 +43,7 @@ import base64 as {vars['base64_mod']}
 
 def {vars['key_input']}():
     try:
-        with {vars['open_func']}("{key_file if key_file else 'key.bin'}", "rb") as f:
+        with {vars['open_func']}("{key_file if key_file else 'key.txt'}", "rb") as f:
             return f.read()
     except:
         {vars['print_func']}("⚠️ Enter decryption key (base64 encoded):")
@@ -64,7 +64,7 @@ except Exception as e:
 
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(template)
-    
+
     if key_file:
         with open(key_file, 'wb') as f:
             f.write(key)
@@ -75,6 +75,6 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Usage: python obfuscator.py <input.py> <output.py> [keyfile]")
         sys.exit(1)
-    
+
     obfuscate(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else None)
     print(f"✅ Obfuscation complete: {sys.argv[2]}")
